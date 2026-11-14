@@ -21,7 +21,15 @@ Give the numbers before -> after for that layer (correct / wrong / no answer, ou
 whether it changed what the agent *can do* or only what it *admits*. If no layer changed the
 number of correct answers, say so and explain what the layers did change instead.
 
-(write here)
+In my work, 1 layer changed the results the most.
+Before layer 1 it was like that:
+bare           correct 16/24  wrong  4  no answer  4  95% [0.47, 0.82]  model calls  51  tokens  39536  seconds   97.0
+after 1 layer:
+layer 1        correct 18/24  wrong  6  no answer  0  95% [0.55, 0.88]  model calls  62  tokens  48708  seconds  104.9
+The rule when we return errors to the model allows the model to try again instead of ending this action with error. But it's not garanty the correctness.
+Layer 2 did not change the outcomes. In other case, layer 3 reduced the wrong answers 6 -> 4 but increased the the questions without any asnwer (0 -> 2). It did not rise the number of correct answers,however it change the asnwer accepted by system.
+
+
 
 ## 2. One failure the full harness did not fix
 
