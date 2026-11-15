@@ -60,6 +60,7 @@ I would choose the fixed workflow for rankings every month because it's more pre
 
 
 the 15 fixed-shape questions:
+
 workflow       correct 13/15  wrong  0  no answer  2  95% [0.62, 0.96]  model calls  15  tokens   3852  seconds   15.7
 
 agent (bare)   correct  9/15  wrong  2  no answer  4  95% [0.36, 0.80]  model calls  26  tokens  19835  seconds   51.6
