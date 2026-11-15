@@ -43,7 +43,8 @@ Pick one question that the full harness (layer 3) still gets wrong or refuses. G
 the model do instead? Name one thing you would add to the harness, and what it would cost
 (extra model calls, tokens, time, or a new way to fail).
 
-(write here)
+I chose question q08 (which region had the lowest average monthly wage in 2024). Despite the full harness, agent called compare_regions (correct indicator and correct year) иге answered Jambyl (it's wrong answer). In comparison, the workflow answered Mangystau. The problem happened when the model received the tool output and after that selected the region. After layer 3, model change "Jambyl" to "ANSWER: Jambyl". This fixed the format but can't cope with wrong answer issue. I think I would implement the verification that find whether the chosen region has min or max of returned values, depending on the question. That requires extra code and could fail if the requested ranking is interpreted incorrectly.
+
 
 ## 3. Workflow or agent for the monthly ranking?
 
