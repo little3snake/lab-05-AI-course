@@ -21,6 +21,7 @@ Give the numbers before -> after for that layer (correct / wrong / no answer, ou
 whether it changed what the agent *can do* or only what it *admits*. If no layer changed the
 number of correct answers, say so and explain what the layers did change instead.
 
+
 In my work, 1 layer changed the results the most.
 
 Before layer 1 it was like that:
@@ -43,7 +44,8 @@ Pick one question that the full harness (layer 3) still gets wrong or refuses. G
 the model do instead? Name one thing you would add to the harness, and what it would cost
 (extra model calls, tokens, time, or a new way to fail).
 
-I chose question q08 (which region had the lowest average monthly wage in 2024). Despite the full harness, agent called compare_regions (correct indicator and correct year) иге answered Jambyl (it's wrong answer). In comparison, the workflow answered Mangystau. The problem happened when the model received the tool output and after that selected the region. After layer 3, model change "Jambyl" to "ANSWER: Jambyl". This fixed the format but can't cope with wrong answer issue. I think I would implement the verification that find whether the chosen region has min or max of returned values, depending on the question. That requires extra code and could fail if the requested ranking is interpreted incorrectly.
+
+I chose question q08 (which region had the lowest average monthly wage in 2024). Despite the full harness, agent called compare_regions (correct indicator and correct year) but answered Jambyl (it's wrong answer). In comparison, the workflow answered Mangystau. The problem happened when the model received the tool output and after that selected the region. After layer 3, model change "Jambyl" to "ANSWER: Jambyl". This fixed the format but can't cope with wrong answer issue. I think I would implement the verification that find whether the chosen region has min or max of returned values, depending on the question. That requires extra code and could fail if the requested ranking is interpreted incorrectly.
 
 
 ## 3. Workflow or agent for the monthly ranking?
@@ -53,7 +55,15 @@ indicator in one year". Would you ship the fixed workflow or the agent? Use the 
 number of model calls, the tokens and the time you measured in Part 1. Then say in one sentence
 what kind of question would make you choose the other one.
 
-(write here)
+
+I would choose the fixed workflow for rankings every month because it's more predictable (the results) and the request has the clear structure like an indicator, a year, highest/lowest region to choose. Let's explain my desicion on part 1 data. The workflow answered 13/15 correctly (0 wrong and 2 unanswered), while the agent answered only 9/15 (2 wrong and 4 unanswered). As for resources, the workflow used 15 model calls, 3852 tokens and 15.7 sec, compared to agent with 26 calls, 19835 tokens and 51.6 sec.
+
+the 15 fixed-shape questions:
+workflow       correct 13/15  wrong  0  no answer  2  95% [0.62, 0.96]  model calls  15  tokens   3852  seconds   15.7
+agent (bare)   correct  9/15  wrong  2  no answer  4  95% [0.36, 0.80]  model calls  26  tokens  19835  seconds   51.6
+
+The difference is obvious. This numbers are suitable for this structured task. 
+If we talk about the agent, it's better with questions that require flexible sequence of retrieval and calculation steps. The workflow just doesn't support such tasks.
 
 ---
 
